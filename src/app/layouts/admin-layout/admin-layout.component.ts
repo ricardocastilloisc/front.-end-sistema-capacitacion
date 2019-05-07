@@ -24,7 +24,7 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.router)
+    //console.log(this.router)
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
@@ -53,16 +53,16 @@ export class AdminLayoutComponent implements OnInit {
          }
       });
       this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-           elemMainPanel.scrollTop = 0;
-           elemSidebar.scrollTop = 0;
+           //elemMainPanel.scrollTop = 0;
+          // elemSidebar.scrollTop = 0;
       });
-      if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+/*       if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
           let ps = new PerfectScrollbar(elemMainPanel);
           ps = new PerfectScrollbar(elemSidebar);
-      }
+      } */
   }
   ngAfterViewInit() {
-      this.runOnRouteChange();
+      //this.runOnRouteChange();
   }
   isMap(path){
       var titlee = this.location.prepareExternalUrl(this.location.path());
