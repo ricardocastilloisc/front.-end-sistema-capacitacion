@@ -24,6 +24,7 @@ import { InicioComponent } from '../../main/inicio/inicio.component';
   declarations: [
     HomeComponent,
     InicioComponent
+    
   ]
 })
 

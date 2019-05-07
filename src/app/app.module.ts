@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { InicioComponent } from './main/inicio/inicio.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import { InicioComponent } from './main/inicio/inicio.component';
     AdminLayoutComponent,
     
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

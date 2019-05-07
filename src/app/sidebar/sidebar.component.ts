@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -7,10 +8,9 @@ declare interface RouteInfo {
     icon: string;
     class: string;
 }
-export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '' },
-    { path: '/inicio', title: 'inicio',  icon: 'pe-7s-graph', class: '' },
-];
+ export let ROUTES: RouteInfo[] = [
+    
+]; 
 
 @Component({
   selector: 'app-sidebar',
@@ -19,10 +19,29 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(public auth: AuthService) {
+    auth.handleAuthentication();
+  }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+
+    if(this.auth.isAuthenticated())
+    {
+      ROUTES = [
+        { path: '/dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '' },
+      ];
+
+      this.menuItems = ROUTES.filter(menuItem => menuItem);
+    }else
+    {
+      ROUTES = [
+        { path: '/inicio', title: 'inicio',  icon: 'pe-7s-graph', class: '' },
+      ];
+
+      this.menuItems = ROUTES.filter(menuItem => menuItem);
+
+    }
+    
   }
   isMobileMenu() {
       if ($(window).width() > 991) {

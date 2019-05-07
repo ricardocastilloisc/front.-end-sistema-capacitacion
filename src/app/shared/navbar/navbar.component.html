@@ -14,8 +14,11 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">
-                        <p>Log out</p>
+                    <a *ngIf="auth.isAuthenticated()" (click)="auth.logout()" style="cursor:pointer">
+                        <p>Cerrar sesión</p>
+                    </a>
+                    <a *ngIf="!auth.isAuthenticated()" (click)="auth.login()" style="cursor:pointer">
+                        <p>Iniciar sesión</p>
                     </a>
                 </li>
                 <li class="separator hidden-lg hidden-md"></li>

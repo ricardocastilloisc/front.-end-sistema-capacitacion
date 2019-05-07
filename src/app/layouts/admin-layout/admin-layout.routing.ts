@@ -5,6 +5,7 @@ import { InicioComponent } from 'app/main/inicio/inicio.component';
 
 
 export const AdminLayoutRoutes: Routes = [
+    { path: 'inicio',      component: InicioComponent },
     { path: 'dashboard',      component: HomeComponent },
-    { path: 'inicio',      component: InicioComponent }
+    
 ];
