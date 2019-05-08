@@ -15,6 +15,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { InicioComponent } from './main/inicio/inicio.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   imports: [
@@ -25,11 +27,13 @@ import { AuthGuardService } from './services/auth-guard.service';
     NavbarModule,
     FooterModule,
     SidebarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    
     
   ],
   providers: [AuthService, AuthGuardService],

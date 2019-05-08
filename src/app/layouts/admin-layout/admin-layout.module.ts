@@ -10,6 +10,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
 import { InicioComponent } from '../../main/inicio/inicio.component';
+import { ListarADGComponent } from '../../main/listar-adg/listar-adg.component';
 
 
 
@@ -23,8 +24,8 @@ import { InicioComponent } from '../../main/inicio/inicio.component';
   ],
   declarations: [
     HomeComponent,
-    InicioComponent
-    
+    InicioComponent,
+    ListarADGComponent
   ]
 })
 

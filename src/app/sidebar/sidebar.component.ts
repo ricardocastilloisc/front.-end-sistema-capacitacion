@@ -29,6 +29,7 @@ export class SidebarComponent implements OnInit {
     {
       ROUTES = [
         { path: '/dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '' },
+        { path: '/listar-personal-adg', title: 'Personal ADG',  icon: 'pe-7s-graph', class: '' },
       
       ];
 
@@ -37,7 +38,7 @@ export class SidebarComponent implements OnInit {
     {
       ROUTES = [
         { path: '/inicio', title: 'inicio',  icon: 'pe-7s-graph', class: '' },
-       
+      
       ];
 
       this.menuItems = ROUTES.filter(menuItem => menuItem);
