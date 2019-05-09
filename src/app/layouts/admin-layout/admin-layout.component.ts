@@ -88,5 +88,11 @@ export class AdminLayoutComponent implements OnInit {
       }
       return bool;
   }
-
+  isMobileMenu() {
+   
+    if (window.innerWidth > 991) {
+      return false;
+    }
+    return true;
+  }
 }

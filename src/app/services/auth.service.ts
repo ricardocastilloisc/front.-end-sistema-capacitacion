@@ -31,9 +31,9 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = "";
         this.setSession(authResult);
-        this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/listar-personal-adg"]);
       } else if (err) {
-        this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/listar-personal-adg"]);
         //console.log(err);
       }
     });

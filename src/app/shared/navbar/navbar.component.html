@@ -1,28 +1,45 @@
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand">{{getTitle()}}</a>
-        </div>
-        <div class="collapse navbar-collapse">
-          
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a *ngIf="auth.isAuthenticated()" (click)="auth.logout()" style="cursor:pointer">
-                        <p>Cerrar sesión</p>
-                    </a>
-                    <a *ngIf="!auth.isAuthenticated()" (click)="auth.login()" style="cursor:pointer">
-                        <p>Iniciar sesión</p>
-                    </a>
-                </li>
-                <li class="separator hidden-lg hidden-md"></li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button
+        type="button"
+        class="navbar-toggle"
+        data-toggle="collapse"
+        (click)="sidebarToggle()"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{{ getTitle() }}</a>
     </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <p class="hidden-lg hidden-md">{{ getTitle() }}</p>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a
+            *ngIf="auth.isAuthenticated()"
+            (click)="auth.logout()"
+            style="cursor:pointer"
+          >
+            <p>Cerrar sesión</p>
+          </a>
+          <a
+            *ngIf="!auth.isAuthenticated()"
+            (click)="auth.login()"
+            style="cursor:pointer"
+          >
+            <p>Iniciar sesión</p>
+          </a>
+        </li>
+        <li class="separator hidden-lg hidden-md"></li>
+      </ul>
+    </div>
+  </div>
 </nav>

@@ -63,9 +63,17 @@ export class NavbarComponent implements OnInit{
       }
       return 'Dashboard';
     }
-
     login()
     {
         console.log('hola mundo');
     }
+
+    isMobileMenu() {
+   
+        if (window.innerWidth > 991) {
+          return false;
+        }
+        return true;
+      }
+
 }
