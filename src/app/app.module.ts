@@ -16,6 +16,8 @@ import { InicioComponent } from './main/inicio/inicio.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { HttpClientModule } from '@angular/common/http';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
@@ -28,15 +30,15 @@ import { HttpClientModule } from '@angular/common/http';
     FooterModule,
     SidebarModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    
-    
   ],
   providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

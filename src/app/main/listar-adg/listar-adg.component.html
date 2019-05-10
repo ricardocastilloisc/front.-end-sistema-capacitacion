@@ -1,55 +1,127 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Personal ADG</h4>
-                        <p class="category">Here is a subtitle for this table</p>
-                    </div>
-                    <div class="content table-responsive table-full-width">
-                        <table mat-table
-                        [dataSource]="dataSource" multiTemplateDataRows
-                        class="mat-elevation-z8"
-                 
-                        >
-                   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                     <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                     <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-                   </ng-container>
-                 
-                   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-                   <ng-container matColumnDef="expandedDetail">
-                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                       <div class="example-element-detail"
-                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                         <div class="example-element-diagram">
-                           <div class="example-element-position"> {{element.position}} </div>
-                           <div class="example-element-symbol"> {{element.symbol}} </div>
-                           <div class="example-element-name"> {{element.name}} </div>
-                           <div class="example-element-weight"> {{element.weight}} </div>
-                         </div>
-                         <div class="example-element-description">
-                           {{element.description}}
-                           <span class="example-element-description-attribution"> -- Wikipedia </span>
-                         </div>
-                       </div>
-                     </td>
-                   </ng-container>
-                 
-                   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                   <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                       class="example-element-row"
-                       [class.example-expanded-row]="expandedElement === element"
-                       (click)="expandedElement = expandedElement === element ? null : element">
-                   </tr>
-                   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                 </table>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+            
+          <div class="header">
+             <div><span style="float:right">Total de registros: <b>{{ pageData.totalRows }}</b></span><h5>Personal ADG</h5></div>
+          </div>
 
-                    </div>
-                </div>
+
+
+          <div class="content table-responsive table-full-width">
+
+            <button>Ejecutar filtros</button>
+            <mat-progress-bar
+              mode="buffer"
+              *ngIf="layoutDeCarga"
+            ></mat-progress-bar>
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              multiTemplateDataRows
+              class="mat-elevation-z8"
+            >
+              <ng-container matColumnDef="NombreCompletoPersonal">
+                <th mat-header-cell *matHeaderCellDef>
+                  Nombre completo
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.NombreCompletoPersonal }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="curp">
+                <th mat-header-cell *matHeaderCellDef>CURP</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.curp }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="rfc">
+                <th mat-header-cell *matHeaderCellDef>RFC</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.rfc }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="CCT">
+                <th mat-header-cell *matHeaderCellDef>CCT</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.CCT }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NombrePuesto">
+                <th mat-header-cell *matHeaderCellDef>Puesto</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.NombrePuesto }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element"></td>
+              </ng-container>
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <td
+                  mat-cell
+                  *matCellDef="let element"
+                  [attr.colspan]="columnsToDisplay.length"
+                >
+                  <div
+                    class="example-element-detail"
+                    [@detailExpand]="
+                      element == expandedElement ? 'expanded' : 'collapsed'
+                    "
+                  >
+                    vdvsdvsdv
+                    <!---Aqui va el contenido adicional-->
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="columnsToDisplay; sticky: true"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let element; columns: columnsToDisplay"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="
+                  expandedElement = expandedElement === element ? null : element
+                "
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: ['expandedDetail']"
+                class="example-detail-row"
+              ></tr>
+            </table>
+
+            <mat-progress-bar
+              mode="buffer"
+              *ngIf="layoutDeCarga"
+            ></mat-progress-bar>
+            <div align="center">
+              <ngb-pagination
+                [collectionSize]="pageData.totalPage * 10"
+                [(page)]="pageData.page"
+                [maxSize]="5"
+                [rotate]="true"
+                [ellipses]="false"
+                [boundaryLinks]="true"
+                (pageChange)="paginacion()"
+              ></ngb-pagination>
             </div>
-
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -26,6 +26,11 @@ import {
   MatFormFieldModule
 } from "@angular/material";
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 
 @NgModule({
@@ -49,6 +54,8 @@ import {
     MatPaginatorModule,
     MatTooltipModule,
     MatMenuModule,
+    NgxSpinnerModule,
+    NgbModule,
   ],
   declarations: [
     HomeComponent,
