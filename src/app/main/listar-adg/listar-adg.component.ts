@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PersonaladgService } from "../../services/CAPACITACION/personaladg.service";
+import { saveAs } from 'file-saver';
 
 import {
   animate,
@@ -45,6 +46,9 @@ export class ListarADGComponent implements OnInit {
     paginacion: 20
   };
 
+
+  FiltrosActivados = false;
+
   expandedElement: any | null;
 
   paginaSiguiente;
@@ -83,6 +87,33 @@ export class ListarADGComponent implements OnInit {
     );
   }
 
+  monstrarFiltros()
+  {
+    if(this.FiltrosActivados)
+    {
+      this.FiltrosActivados = false;
+    }else
+    {
+      this.FiltrosActivados = true;
+    }
+  }
+
+  DescargarReporteGeneral()
+  {
+
+    this.layoutDeCarga = true;
+
+    const body =  
+    {
+      NombreReporte: "Reporte_General_10_5_2019",
+      busqueda: 0
+    };
+    this._PersonaladgServie.ExportarExcelPersonalADG(body).subscribe(res => { 
+      saveAs(res, 'YourFileName.xlsx', 
+      { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      this.layoutDeCarga = false;
+    });
+  }
   listarPersonalADG() {
     this.layoutDeCarga = true;
 
