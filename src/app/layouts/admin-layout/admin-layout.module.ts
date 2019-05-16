@@ -55,7 +55,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatTooltipModule,
     MatMenuModule,
     NgxSpinnerModule,
-    NgbModule,
+    NgbModule
   ],
   declarations: [
     HomeComponent,

@@ -23,6 +23,9 @@ export class PersonaladgService {
   PaginacionListarPersonalADG(body, page): Observable<any> {
     return this.http.post(`${this.url}ListarPersonalADG?page=${page}`, body);
   }
+  ListadoTablasIndependientes(): Observable<any> {
+    return this.http.get(`${this.url}ListadoTablasIndependientes`);
+  }
   ExportarExcelPersonalADG(body){
     return this.http.post(`${this.url}ExportarExcelPersonalADG`, body, {responseType: 'blob'});
   }

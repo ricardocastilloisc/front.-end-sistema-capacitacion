@@ -55,7 +55,16 @@ export class ListarADGComponent implements OnInit {
   paginaAnterior;
 
   layoutDeCarga;
-  
+
+  municipiolaboral;
+  arealaboral;
+  puestos;
+
+  ///FILTROS
+  seleccionar_arealaboral;
+  seleccionar_municipiolaboral;
+  seleccionar_puestos;
+
 
   constructor(private _PersonaladgServie: PersonaladgService) {
     this.listarPersonalADG();
@@ -103,22 +112,54 @@ export class ListarADGComponent implements OnInit {
 
     this.layoutDeCarga = true;
 
+    var f = new Date();
+
+    let nombredelReporte = "Reporte_General_" + f.getDate() + "_" + (f.getMonth() +1) + "_" + f.getFullYear();
+
+    let nombredelDescarga = nombredelReporte + '.xlsx'
+
+
     const body =  
     {
-      NombreReporte: "Reporte_General_10_5_2019",
+      NombreReporte: nombredelReporte,
       busqueda: 0
     };
     this._PersonaladgServie.ExportarExcelPersonalADG(body).subscribe(res => { 
-      saveAs(res, 'YourFileName.xlsx', 
+      saveAs(res, nombredelDescarga, 
       { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       this.layoutDeCarga = false;
     });
   }
   listarPersonalADG() {
     this.layoutDeCarga = true;
-
     const body = {
       busqueda: 0,
+      paginacion: this.pageData.paginacion
+    };
+
+    this._PersonaladgServie.ListadoTablasIndependientes().subscribe(
+      res =>
+      {
+        this.municipiolaboral = res.municipiolaboral;
+        this.arealaboral = res.arealaboral;
+        this.puestos = res.puestos;
+      } 
+    );
+    this._PersonaladgServie.ListarPersonalADG(body).subscribe(res => {
+      this.dataSource = res.ListadoPersonalADG.data;
+      this.pageData.page = res.pagination.current_page;
+      this.pageData.totalRows = res.pagination.total;
+      this.paginaSiguiente = res.ListadoPersonalADG.next_page_url;
+      this.paginaAnterior = res.ListadoPersonalADG.prev_page_url;
+      this.pageData.totalPage =  res.pagination.last_page;
+      this.layoutDeCarga = false;
+    });
+  }
+
+  filtrar(){
+    this.layoutDeCarga = true;
+    const body = {
+      busqueda: 1,
       paginacion: this.pageData.paginacion
     };
     this._PersonaladgServie.ListarPersonalADG(body).subscribe(res => {
