@@ -23,6 +23,10 @@
           <!---------------------------->
 
           <div class="card" *ngIf="FiltrosActivados">
+              <mat-progress-bar
+              mode="buffer"
+              *ngIf="layoutDeCarga"
+            ></mat-progress-bar>
             <div class="content">
               <div class="row">
                 <div class="col-md-6">
@@ -76,75 +80,112 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Clave centro trabajo:</label>
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" [(ngModel)]="input_CCT" />
                   </div>
                 </div>
               </div>
 
               <div class="row">
-               
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Nombre del centro de trabajo:</label>
-                      <input type="text" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Nombre completo de personal ADG:</label>
-                      <input type="text" class="form-control" />
-                    </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Nombre del centro de trabajo:</label>
+                    <input type="text" class="form-control" [(ngModel)]="input_nombreCCT" />
                   </div>
                 </div>
-
-              <div class="row">
-               
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>RFC:</label>
-                      <input type="text" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>CURP:</label>
-                      <input type="text" class="form-control" />
-                    </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Nombre completo de personal ADG:</label>
+                    <input type="text" class="form-control" [(ngModel)]="input_nombrePersonalADG" />
                   </div>
                 </div>
-
+              </div>
 
               <div class="row">
-               
-                  <div class="col-md-6">
-                    <div class="form-group">
-                               <label>Sexo:</label>
-                    <select
-                      class="form-control"
-                      
-                    >
-                      <option
-                        value="M"
-                        >MUJER</option
-                      >
-                      <option
-                        value="H"
-                        >HOMBRE</option
-                      >
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>RFC:</label>
+                    <input type="text" class="form-control" [(ngModel)]="input_rfc" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>CURP:</label>
+                    <input type="text" class="form-control" [(ngModel)]="input_curp" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Sexo:</label>
+                    <select class="form-control" [(ngModel)]="seleccionar_sexo">
+                      <option value="M">MUJER</option>
+                      <option value="H">HOMBRE</option>
                     </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>CURP </label>
-                      <input type="text" class="form-control" />
-                    </div>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Tipo de sangre:</label>
+                    <input type="text" class="form-control" [(ngModel)]="input_tipo_de_sangre" />
+                  </div>
+                </div>
+              </div>
 
-              <button class="btn btn-info btn-fill pull-right">
-                Update Profile
-              </button>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Estado civil:</label>
+                    <select class="form-control" [(ngModel)]="seleccionar_estado_civil">
+                      <option value="SOLTERO">SOLTERO</option>
+                      <option value="CASADO">CASADO</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <button
+                  class="btn btn-info btn-fill pull-right"
+                  style="margin-right: 2%"
+                  (click)="filtrar()"
+                  [disabled]="
+                  !seleccionar_arealaboral &&
+                  !seleccionar_municipiolaboral &&
+                  !seleccionar_puestos &&
+                  !input_CCT &&
+                  !input_nombreCCT &&
+                  !input_nombrePersonalADG &&
+                  !input_rfc &&
+                  !input_curp &&
+                  !seleccionar_sexo &&
+                  !input_tipo_de_sangre &&
+                  !seleccionar_estado_civil
+                                "
+                >
+                  Filtrar
+                </button>
+                <button
+                  class="btn btn-danger btn-fill pull-right"
+                  style="margin-right: 2%"
+                  (click)="limpiarFiltros()"
+                  [disabled]="
+                  !seleccionar_arealaboral &&
+                  !seleccionar_municipiolaboral &&
+                  !seleccionar_puestos &&
+                  !input_CCT &&
+                  !input_nombreCCT &&
+                  !input_nombrePersonalADG &&
+                  !input_rfc &&
+                  !input_curp &&
+                  !seleccionar_sexo &&
+                  !input_tipo_de_sangre &&
+                  !seleccionar_estado_civil
+                                "
+                >
+                  Limpiar filtro
+                </button>
+              </div>
             </div>
           </div>
 
@@ -156,6 +197,14 @@
             (click)="monstrarFiltros()"
           >
             Ocultar filtros
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            *ngIf="filtrosActivo"
+            (click)="BorrarElFiltroEjecutado()"
+          >
+            Borrar el filtro ejecutado
           </button>
 
           <button

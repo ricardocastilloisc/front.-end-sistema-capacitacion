@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PersonaladgService } from "../../services/CAPACITACION/personaladg.service";
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
 
 import {
   animate,
@@ -46,7 +46,6 @@ export class ListarADGComponent implements OnInit {
     paginacion: 20
   };
 
-
   FiltrosActivados = false;
 
   expandedElement: any | null;
@@ -64,7 +63,20 @@ export class ListarADGComponent implements OnInit {
   seleccionar_arealaboral;
   seleccionar_municipiolaboral;
   seleccionar_puestos;
+  input_CCT;
+  input_nombreCCT;
+  input_nombrePersonalADG;
+  input_rfc;
+  input_curp;
+  seleccionar_sexo;
+  input_tipo_de_sangre;
+  seleccionar_estado_civil;
 
+  /////
+
+  busqueda = 0;
+
+  filtrosActivo = false;
 
   constructor(private _PersonaladgServie: PersonaladgService) {
     this.listarPersonalADG();
@@ -72,95 +84,137 @@ export class ListarADGComponent implements OnInit {
 
   ngOnInit() {}
 
-  
-
-  paginacion() 
+  BorrarElFiltroEjecutado()
   {
+    this.filtrosActivo = false;
+    this.listarPersonalADG();
+    this.limpiarFiltros();
+  }
+
+  limpiarFiltros()
+  {
+    this.seleccionar_arealaboral = null;
+    this.seleccionar_municipiolaboral = null;
+    this.seleccionar_puestos = null;
+    this.input_CCT = null;
+    this.input_nombreCCT = null;
+    this.input_nombrePersonalADG = null;
+    this.input_rfc = null;
+    this.input_curp = null;
+    this.seleccionar_sexo = null;
+    this.input_tipo_de_sangre = null;
+    this.seleccionar_estado_civil = null;
+  }
+
+  paginacion() {
     this.layoutDeCarga = true;
     const body = {
-      busqueda: 0,
-      paginacion: this.pageData.paginacion
+      busqueda: this.busqueda,
+      paginacion: this.pageData.paginacion,
+      municipio_id: this.seleccionar_municipiolaboral,
+      arealaboral_id: this.seleccionar_arealaboral,
+      id_puesto: this.seleccionar_puestos,
+      CCT: this.input_CCT,
+      nombreCCT: this.input_nombreCCT,
+      nombrePersonalADG: this.input_nombrePersonalADG,
+      rfc: this.input_rfc,
+      curp: this.input_curp,
+      sexo: this.seleccionar_sexo,
+      tipo_de_sangre: this.input_tipo_de_sangre,
+      estado_civil: this.seleccionar_estado_civil
     };
 
-    this._PersonaladgServie.PaginacionListarPersonalADG(body, this.pageData.page).subscribe(
-      res =>
-      {
+    this._PersonaladgServie
+      .PaginacionListarPersonalADG(body, this.pageData.page)
+      .subscribe(res => {
         this.dataSource = res.ListadoPersonalADG.data;
         this.pageData.page = res.pagination.current_page;
         this.pageData.totalRows = res.pagination.total;
-        this.pageData.totalPage =  res.pagination.last_page;
+        this.pageData.totalPage = res.pagination.last_page;
         this.paginaSiguiente = res.ListadoPersonalADG.next_page_url;
         this.paginaAnterior = res.ListadoPersonalADG.prev_page_url;
         this.layoutDeCarga = false;
-      }
-    );
+      });
   }
 
-  monstrarFiltros()
-  {
-    if(this.FiltrosActivados)
-    {
+  monstrarFiltros() {
+    if (this.FiltrosActivados) {
       this.FiltrosActivados = false;
-    }else
-    {
+    } else {
       this.FiltrosActivados = true;
     }
   }
 
-  DescargarReporteGeneral()
-  {
-
+  DescargarReporteGeneral() {
     this.layoutDeCarga = true;
 
     var f = new Date();
 
-    let nombredelReporte = "Reporte_General_" + f.getDate() + "_" + (f.getMonth() +1) + "_" + f.getFullYear();
+    let nombredelReporte =
+      "Reporte_General_" +
+      f.getDate() +
+      "_" +
+      (f.getMonth() + 1) +
+      "_" +
+      f.getFullYear();
 
-    let nombredelDescarga = nombredelReporte + '.xlsx'
+    let nombredelDescarga = nombredelReporte + ".xlsx";
 
-
-    const body =  
-    {
+    const body = {
       NombreReporte: nombredelReporte,
       busqueda: 0
     };
-    this._PersonaladgServie.ExportarExcelPersonalADG(body).subscribe(res => { 
-      saveAs(res, nombredelDescarga, 
-      { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    this._PersonaladgServie.ExportarExcelPersonalADG(body).subscribe(res => {
+      saveAs(res, nombredelDescarga, {
+        type:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      });
       this.layoutDeCarga = false;
     });
   }
   listarPersonalADG() {
+
+    this.busqueda = 0;
     this.layoutDeCarga = true;
     const body = {
-      busqueda: 0,
+      busqueda: this.busqueda,
       paginacion: this.pageData.paginacion
     };
 
-    this._PersonaladgServie.ListadoTablasIndependientes().subscribe(
-      res =>
-      {
-        this.municipiolaboral = res.municipiolaboral;
-        this.arealaboral = res.arealaboral;
-        this.puestos = res.puestos;
-      } 
-    );
+    this._PersonaladgServie.ListadoTablasIndependientes().subscribe(res => {
+      this.municipiolaboral = res.municipiolaboral;
+      this.arealaboral = res.arealaboral;
+      this.puestos = res.puestos;
+    });
     this._PersonaladgServie.ListarPersonalADG(body).subscribe(res => {
       this.dataSource = res.ListadoPersonalADG.data;
       this.pageData.page = res.pagination.current_page;
       this.pageData.totalRows = res.pagination.total;
       this.paginaSiguiente = res.ListadoPersonalADG.next_page_url;
       this.paginaAnterior = res.ListadoPersonalADG.prev_page_url;
-      this.pageData.totalPage =  res.pagination.last_page;
+      this.pageData.totalPage = res.pagination.last_page;
       this.layoutDeCarga = false;
     });
   }
 
-  filtrar(){
+  filtrar() {
+    this.busqueda = 1;
+    this.filtrosActivo = true;
     this.layoutDeCarga = true;
     const body = {
-      busqueda: 1,
-      paginacion: this.pageData.paginacion
+      busqueda: this.busqueda,
+      paginacion: this.pageData.paginacion,
+      municipio_id: this.seleccionar_municipiolaboral,
+      arealaboral_id: this.seleccionar_arealaboral,
+      id_puesto: this.seleccionar_puestos,
+      CCT: this.input_CCT,
+      nombreCCT: this.input_nombreCCT,
+      nombrePersonalADG: this.input_nombrePersonalADG,
+      rfc: this.input_rfc,
+      curp: this.input_curp,
+      sexo: this.seleccionar_sexo,
+      tipo_de_sangre: this.input_tipo_de_sangre,
+      estado_civil: this.seleccionar_estado_civil
     };
     this._PersonaladgServie.ListarPersonalADG(body).subscribe(res => {
       this.dataSource = res.ListadoPersonalADG.data;
@@ -168,7 +222,7 @@ export class ListarADGComponent implements OnInit {
       this.pageData.totalRows = res.pagination.total;
       this.paginaSiguiente = res.ListadoPersonalADG.next_page_url;
       this.paginaAnterior = res.ListadoPersonalADG.prev_page_url;
-      this.pageData.totalPage =  res.pagination.last_page;
+      this.pageData.totalPage = res.pagination.last_page;
       this.layoutDeCarga = false;
     });
   }
